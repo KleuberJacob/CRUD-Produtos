@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProdutoDtoRequest;
 import com.example.demo.dto.ProdutoDtoResponse;
+import com.example.demo.exceptions.NaoExisteException;
 import com.example.demo.service.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ProdutoController {
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<ProdutoDtoResponse> buscarProduto(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ProdutoDtoResponse> buscarProduto(@PathVariable Long id) {
         ProdutoDtoResponse produtoDtoResponse = service.buscarProduto(id);
         return ResponseEntity.ok(produtoDtoResponse);
     }
@@ -43,7 +44,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) throws NaoExisteException {
         service.excluir(id);
         return ResponseEntity.noContent().build();
     }
