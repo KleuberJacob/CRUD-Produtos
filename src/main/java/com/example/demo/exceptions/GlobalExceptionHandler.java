@@ -18,10 +18,10 @@ public class GlobalExceptionHandler {
         errorObject.setMessage(e.getMessage());
         errorObject.setTimeStamp(new Date());
 
-        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NaoExisteException.class)
+    @ExceptionHandler(NaoEncontradoException.class)
     public ResponseEntity<ErrorObject> naoEncontradoException(NaoEncontradoException e) {
         ErrorObject errorObject = new ErrorObject();
 

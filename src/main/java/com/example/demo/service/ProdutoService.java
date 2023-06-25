@@ -43,7 +43,7 @@ public class ProdutoService {
             ProdutoDtoResponse produtoResponse = converter.entityToDto(produto.get());
             return produtoResponse;
         }
-        throw new NaoEncontradoException(String.format("O produto de id: %s informado não existe!", id));
+        throw new NaoEncontradoException(String.format("O produto de id: %s informado não foi encontrado!", id));
     }
 
     public void excluir(Long id) throws NaoExisteException {

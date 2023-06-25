@@ -30,11 +30,9 @@ public class ProdutoController {
         List<ProdutoDtoResponse> produtos = service.buscarTodosProdutos();
         return ResponseEntity.ok(produtos);
     }
-
     @GetMapping(value="/{id}")
-    public ResponseEntity<ProdutoDtoResponse> buscarProduto(@PathVariable Long id) {
-        ProdutoDtoResponse produtoDtoResponse = service.buscarProduto(id);
-        return ResponseEntity.ok(produtoDtoResponse);
+    public ProdutoDtoResponse buscarProduto(@PathVariable Long id) {
+        return service.buscarProduto(id);
     }
 
     @PutMapping
