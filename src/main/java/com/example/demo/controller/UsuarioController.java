@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UsuarioDTORequest;
-import com.example.demo.dto.UsuarioDTOResponse;
 import com.example.demo.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +17,14 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public UsuarioDTOResponse cadastroDeUsuario(@Valid @RequestBody UsuarioDTORequest usuarioDtoRequest) {
-        UsuarioDTOResponse usuarioDtoResponse = service.cadastrarNovoUsuario(usuarioDtoRequest);
-        return usuarioDtoResponse;
+    public String cadastroDeUsuario(@RequestBody @Valid UsuarioDTORequest usuarioDtoRequest) {
+        service.cadastrarNovoUsuario(usuarioDtoRequest);
+        return "Cadastrado com sucesso!";
     }
 
     @PostMapping("/validar")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> validaUsuario(@Valid @RequestBody UsuarioDTORequest usuarioDtoRequest) {
-        String s = service.validaUsuario(usuarioDtoRequest);
-        return ResponseEntity.ok(s);
+    public void validaUsuario(@RequestBody @Valid UsuarioDTORequest usuarioDtoRequest) {
+        service.validaUsuario(usuarioDtoRequest);
     }
 
 }
