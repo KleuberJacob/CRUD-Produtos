@@ -1,15 +1,15 @@
 package com.example.demo.converter;
 
 import com.example.demo.domain.Produto;
-import com.example.demo.dto.ProdutoDtoRequest;
-import com.example.demo.dto.ProdutoDtoResponse;
+import com.example.demo.dto.ProdutoDTORequest;
+import com.example.demo.dto.ProdutoDTOResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProdutoConverter {
 
-    public ProdutoDtoResponse entityToDto(Produto produto) {
-        ProdutoDtoResponse dto = new ProdutoDtoResponse();
+    public ProdutoDTOResponse entityToDto(Produto produto) {
+        ProdutoDTOResponse dto = new ProdutoDTOResponse();
         dto.setSku(produto.getSku());
         dto.setNome(produto.getNome());
         dto.setDescricao(produto.getDescricao());
@@ -17,7 +17,7 @@ public class ProdutoConverter {
         return dto;
     }
 
-    public Produto dtoToEntity(ProdutoDtoRequest produtoDtoRequest) {
+    public Produto dtoToEntity(ProdutoDTORequest produtoDtoRequest) {
         Produto entity = new Produto();
         entity.setSku(produtoDtoRequest.getSku());
         entity.setNome(produtoDtoRequest.getNome());

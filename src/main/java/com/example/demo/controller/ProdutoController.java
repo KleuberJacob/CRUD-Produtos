@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ProdutoDtoRequest;
-import com.example.demo.dto.ProdutoDtoResponse;
+import com.example.demo.dto.ProdutoDTORequest;
+import com.example.demo.dto.ProdutoDTOResponse;
 import com.example.demo.exceptions.NaoExisteException;
 import com.example.demo.service.ProdutoService;
 import jakarta.validation.Valid;
@@ -20,24 +20,24 @@ public class ProdutoController {
     private final ProdutoService service;
 
     @PostMapping
-    public ResponseEntity<ProdutoDtoResponse> salvar(@Valid @RequestBody ProdutoDtoRequest produtoDtoRequest) {
-        ProdutoDtoResponse produtoDtoResponse = service.salvarProduto(produtoDtoRequest);
+    public ResponseEntity<ProdutoDTOResponse> salvar(@Valid @RequestBody ProdutoDTORequest produtoDtoRequest) {
+        ProdutoDTOResponse produtoDtoResponse = service.salvarProduto(produtoDtoRequest);
         return new ResponseEntity<>(produtoDtoResponse, HttpStatus.CREATED);
     }
 
     @GetMapping(value="/todos")
-    public ResponseEntity<List<ProdutoDtoResponse>> buscarTodosProdutos() {
-        List<ProdutoDtoResponse> produtos = service.buscarTodosProdutos();
+    public ResponseEntity<List<ProdutoDTOResponse>> buscarTodosProdutos() {
+        List<ProdutoDTOResponse> produtos = service.buscarTodosProdutos();
         return ResponseEntity.ok(produtos);
     }
     @GetMapping(value="/{id}")
-    public ProdutoDtoResponse buscarProduto(@PathVariable Long id) {
+    public ProdutoDTOResponse buscarProduto(@PathVariable Long id) {
         return service.buscarProduto(id);
     }
 
     @PutMapping
-    public ResponseEntity<ProdutoDtoResponse> atualizarProduto(@Valid @RequestBody ProdutoDtoRequest produtoDtoRequest) {
-        ProdutoDtoResponse produtoDtoResponse = service.atualizarProduto(produtoDtoRequest);
+    public ResponseEntity<ProdutoDTOResponse> atualizarProduto(@Valid @RequestBody ProdutoDTORequest produtoDtoRequest) {
+        ProdutoDTOResponse produtoDtoResponse = service.atualizarProduto(produtoDtoRequest);
         return ResponseEntity.ok(produtoDtoResponse);
     }
 

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProdutoDtoRequest {
+public class ProdutoDTORequest {
 
     @NotNull(message = "O número de sku deve ser informado.")
     private String sku;
