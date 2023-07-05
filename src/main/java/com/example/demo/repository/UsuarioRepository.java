@@ -2,11 +2,10 @@ package com.example.demo.repository;
 
 import com.example.demo.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    Optional<Usuario> findByNome(String nome);
+    UserDetails findByNome(String nome);
 
 }
