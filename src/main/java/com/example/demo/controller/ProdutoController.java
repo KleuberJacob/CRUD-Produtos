@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("produtos")
 @RequiredArgsConstructor
 public class ProdutoController {
 
@@ -25,26 +25,28 @@ public class ProdutoController {
         return new ResponseEntity<>(produtoDtoResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping(value="/todos")
-    public ResponseEntity<List<ProdutoDTOResponse>> buscarTodosProdutos() {
-        List<ProdutoDTOResponse> produtos = service.buscarTodosProdutos();
+    @GetMapping
+    public ResponseEntity<List<ProdutoDTOResponse>> buscarProdutos() {
+        List<ProdutoDTOResponse> produtos = service.buscarProdutos();
+        if (produtos == null) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(produtos);
     }
-    @GetMapping(value="/{id}")
+
+    @GetMapping("/{id}")
     public ProdutoDTOResponse buscarProduto(@PathVariable Long id) {
         return service.buscarProduto(id);
     }
 
     @PutMapping
-    public ResponseEntity<ProdutoDTOResponse> atualizarProduto(@Valid @RequestBody ProdutoDTORequest produtoDtoRequest) {
+    public ResponseEntity<ProdutoDTOResponse> atualizaProduto(@Valid @RequestBody ProdutoDTORequest produtoDtoRequest) {
         ProdutoDTOResponse produtoDtoResponse = service.atualizarProduto(produtoDtoRequest);
         return ResponseEntity.ok(produtoDtoResponse);
     }
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) throws NaoExisteException {
+    @ResponseStatus(HttpStatus.OK)
+    public void excluir(@PathVariable Long id) throws NaoExisteException {
         service.excluir(id);
-        return ResponseEntity.noContent().build();
     }
 
 }

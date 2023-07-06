@@ -27,12 +27,13 @@ public class ProdutoService {
         return converter.entityToDto(produtoSalvo);
     }
 
-    public List<ProdutoDTOResponse> buscarTodosProdutos() {
+    public List<ProdutoDTOResponse> buscarProdutos() {
         List<Produto> produtos = repository.findAll();
         List<ProdutoDTOResponse> produtoDto = new ArrayList<>();
         for(Produto produto : produtos) {
             produtoDto.add(converter.entityToDto(produto));
         }
+        if (produtos.isEmpty()) return null;
         return produtoDto;
     }
 

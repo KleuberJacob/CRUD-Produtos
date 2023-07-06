@@ -5,6 +5,7 @@ import com.example.demo.dto.UsuarioCadastroDTO;
 import com.example.demo.dto.UsuarioLoginDTO;
 import com.example.demo.exceptions.NaoExisteException;
 import com.example.demo.repository.UsuarioRepository;
+import com.example.demo.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
-//    private final UsuarioLoginConverter usuarioLoginConverter;
-//    private final UsuarioCadastroConverter usuarioCadastroConverter;
+    private final TokenService tokenService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -29,7 +30,6 @@ public class UsuarioService {
         if (usuarioCadastroDTO.senha().trim().length() < 8) {
             throw new NaoExisteException("Sua senha deve conter no mínimo 8 caracteres!");
         }
-
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioCadastroDTO.senha());
         Usuario newUsuario = new Usuario(usuarioCadastroDTO.nome(), senhaCriptografada, usuarioCadastroDTO.acessoEnum());
 
@@ -37,19 +37,13 @@ public class UsuarioService {
     }
 
     public String loginUsuario(UsuarioLoginDTO usuarioLoginDTO) {
+        if(repository.findByNome(usuarioLoginDTO.nome()) == null) {
+            throw new NaoExisteException("Usuário informado não existe!");
+        }
         var userNamePassword = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.nome(), usuarioLoginDTO.senha());
         var auth = authenticationManager.authenticate(userNamePassword);
-        
 
-//        if(repository.findByNome(usuarioLoginDTO.nome()) == null) {
-//            throw new NaoExisteException("Usuário informado não existe!");
-//        }
-//        UserDetails byNome = repository.findByNome(usuarioLoginDTO.nome());
-//        if (repository.findByNome(usuarioLoginDTO.nome() == null) {
-//            throw new NaoExisteException("Usuário informado não existe!");
-//        }
-        return "teste";
-
+        return tokenService.geradorToken((Usuario) auth.getPrincipal());
     }
 
 }
