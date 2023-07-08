@@ -1,11 +1,9 @@
 package com.example.demo.services;
 
 import com.example.demo.converter.ProdutoConverter;
-import com.example.demo.domain.Produto;
-import com.example.demo.dto.ProdutoDTORequest;
-import com.example.demo.dto.ProdutoDTOResponse;
 import com.example.demo.exceptions.NaoEncontradoException;
 import com.example.demo.exceptions.NaoExisteException;
+import com.example.demo.factory.ProdutoFactory;
 import com.example.demo.repository.ProdutoRepository;
 import com.example.demo.service.ProdutoService;
 import org.junit.jupiter.api.Assertions;
@@ -34,24 +32,9 @@ class ProdutoServiceTest {
     @Test
     @DisplayName("Deve salvar um produto com sucesso.")
     void deveSalvarUmProduto() {
-        ProdutoDTOResponse produtoDTOResponse = new ProdutoDTOResponse();
-        produtoDTOResponse.setSku("SK1");
-        produtoDTOResponse.setNome("Notebook");
-        produtoDTOResponse.setDescricao("Notebook Positivo");
-        produtoDTOResponse.setPreco(599.90);
-        Produto produto = new Produto();
-        produto.setId(1L);
-        produto.setSku("SK1");
-        produto.setNome("Notebook");
-        produto.setDescricao("Notebook Positivo");
-        produto.setPreco(599.90);
-        produto.setQuantidade(5);
-        ProdutoDTORequest produtoDTORequest = new ProdutoDTORequest();
-        produtoDTORequest.setSku("SK1");
-        produtoDTORequest.setNome("Notebook");
-        produtoDTORequest.setDescricao("Notebook Positivo");
-        produtoDTORequest.setPreco(599.90);
-        produtoDTORequest.setQuantidade(5);
+        final var produtoDTOResponse = ProdutoFactory.novoProdutoDTOResponse();
+        final var produto = ProdutoFactory.novoProduto();
+        final var produtoDTORequest = ProdutoFactory.novoProdutoDTORequest();
         Mockito.when(converter.dtoToEntity(produtoDTORequest))
                 .thenReturn(produto);
         Mockito.when(repository.save(produto))
@@ -76,19 +59,9 @@ class ProdutoServiceTest {
     @Test
     @DisplayName("Deve buscar produtos com sucesso.")
     void deveBuscarProdutos() {
-        ProdutoDTOResponse produtoDTOResponse = new ProdutoDTOResponse();
-        produtoDTOResponse.setSku("SK1");
-        produtoDTOResponse.setNome("Notebook");
-        produtoDTOResponse.setDescricao("Notebook Positivo");
-        produtoDTOResponse.setPreco(599.90);
+        final var produtoDTOResponse = ProdutoFactory.novoProdutoDTOResponse();
         final var listaProdutosResponse = List.of(produtoDTOResponse);
-        Produto produto = new Produto();
-        produto.setId(1L);
-        produto.setSku("SK1");
-        produto.setNome("Notebook");
-        produto.setDescricao("Notebook Positivo");
-        produto.setPreco(599.90);
-        produto.setQuantidade(5);
+        final var produto = ProdutoFactory.novoProduto();
         final var listaProdutos = List.of(produto);
         Mockito.when(repository.findAll())
                 .thenReturn(listaProdutos);
@@ -109,18 +82,8 @@ class ProdutoServiceTest {
     @DisplayName("Deve buscar produto com sucesso pelo id com sucesso.")
     void deveBuscarProdutoPeloIdComSucesso() {
         final var idProduto = 1L;
-        ProdutoDTOResponse produtoDTOResponse = new ProdutoDTOResponse();
-        produtoDTOResponse.setSku("SK1");
-        produtoDTOResponse.setNome("Notebook");
-        produtoDTOResponse.setDescricao("Notebook Positivo");
-        produtoDTOResponse.setPreco(599.90);
-        Produto produto = new Produto();
-        produto.setId(1L);
-        produto.setSku("SK1");
-        produto.setNome("Notebook");
-        produto.setDescricao("Notebook Positivo");
-        produto.setPreco(599.90);
-        produto.setQuantidade(5);
+        final var produtoDTOResponse = ProdutoFactory.novoProdutoDTOResponse();
+        final var produto = ProdutoFactory.novoProduto();
         Mockito.when(repository.findById(idProduto))
                 .thenReturn(Optional.of(produto));
         Mockito.when(converter.entityToDto(produto))
@@ -158,13 +121,7 @@ class ProdutoServiceTest {
     @DisplayName("Deve excluir um produto com sucesso.")
     void deveExcluirUmProdutoComSucesso() {
         final var idProduto = 1L;
-        Produto produto = new Produto();
-        produto.setId(1L);
-        produto.setSku("SK1");
-        produto.setNome("Notebook");
-        produto.setDescricao("Notebook Positivo");
-        produto.setPreco(599.90);
-        produto.setQuantidade(5);
+        final var produto = ProdutoFactory.novoProduto();
         Mockito.when(repository.findById(idProduto))
                 .thenReturn(Optional.of(produto));
 
@@ -196,24 +153,9 @@ class ProdutoServiceTest {
     @DisplayName("Deve atualizar um produto pelo IdSku com sucesso.")
     void deveAtualizarUmProduto() {
         final var idSku = "SK1";
-        ProdutoDTOResponse produtoDTOResponse = new ProdutoDTOResponse();
-        produtoDTOResponse.setSku("SK1");
-        produtoDTOResponse.setNome("Notebook");
-        produtoDTOResponse.setDescricao("Notebook Positivo");
-        produtoDTOResponse.setPreco(599.90);
-        Produto produto = new Produto();
-        produto.setId(1L);
-        produto.setSku("SK1");
-        produto.setNome("Notebook");
-        produto.setDescricao("Notebook Positivo");
-        produto.setPreco(599.90);
-        produto.setQuantidade(5);
-        ProdutoDTORequest produtoDTORequest = new ProdutoDTORequest();
-        produtoDTORequest.setSku("SK1");
-        produtoDTORequest.setNome("Notebook");
-        produtoDTORequest.setDescricao("Notebook Positivo");
-        produtoDTORequest.setPreco(599.90);
-        produtoDTORequest.setQuantidade(5);
+        final var produtoDTOResponse = ProdutoFactory.novoProdutoDTOResponse();
+        final var produto = ProdutoFactory.novoProduto();
+        final var produtoDTORequest = ProdutoFactory.novoProdutoDTORequest();
         Mockito.when(repository.findBySku(idSku))
                 .thenReturn(Optional.of(produto));
         Mockito.when(repository.save(produto))
@@ -233,6 +175,24 @@ class ProdutoServiceTest {
         Assertions.assertEquals(produtoDTORequest.getNome(), response.getNome());
         Assertions.assertEquals(produtoDTORequest.getDescricao(), response.getDescricao());
         Assertions.assertEquals(produtoDTORequest.getPreco(), response.getPreco());
+    }
+
+    @Test
+    @DisplayName("Deve lançar NaoEncontradoException quando não encontrar produto a ser atulizado pelo IdSku.")
+    void deveLancarNaoEncontradoExceptionQuandoNaoEncontrarProdutoPeloIdSku() {
+        final var idSku = "SK1";
+        final var produtoDTORequest = ProdutoFactory.novoProdutoDTORequest();
+        Mockito.when(repository.findBySku(idSku))
+                .thenReturn(Optional.empty());
+
+        final var exception = Assertions.assertThrows(NaoEncontradoException.class,
+                () -> sut.atualizarProduto(produtoDTORequest));
+
+        Assertions.assertEquals("O produto informado não foi encontrado!", exception.getMessage());
+        Mockito.verify(repository, Mockito.times(1))
+                .findBySku(idSku);
+        Mockito.verifyNoMoreInteractions(repository);
+        Mockito.verifyNoInteractions(converter);
     }
 
 }
